@@ -1,13 +1,26 @@
+import { authApi } from 'api';
 import { useAppSelector } from 'app/hooks';
-import { selectCurrentUser } from 'features/Auth/services/authSlice';
-import React from 'react'
-import { Navigate, Outlet } from 'react-router-dom';
+import { authActions, selectToken } from 'features/Auth/services/authSlice';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { Navigate, Outlet,useNavigate } from 'react-router-dom';
 
 
 export function PrivateRoute() {
-  
-    const isLoggedIn=useAppSelector(selectCurrentUser)
-    if(!isLoggedIn) return <Navigate replace to="/auth/login" />
+    const navigate=useNavigate()
+    const dispatch=useDispatch()
+    const token=useAppSelector(selectToken)
+    useEffect((): void => {
+        (async (): Promise<void> => {
+          try {
+            await authApi.checkToken(token)
+          } catch (error) {
+            dispatch(authActions.logout())
+            navigate('/auth')
+          }
+        })()
+    },[])
+    if(!token) return <Navigate replace to="/auth/login" />
     return (
         <Outlet/>
   )

@@ -1,4 +1,4 @@
-import { Category, IProductFilters, Product } from "models"
+import { Category } from "models"
 import { ApiResponse } from "models/Common"
 import axiosClient from "./axiosClient"
 
@@ -8,4 +8,3 @@ export const categoryApi={
         return axiosClient.get(url)
     }
 }
-

@@ -3,6 +3,7 @@ import { commonApi } from 'api';
 import Dropdown, { DropdownData, FormDropdownData } from 'components/FormControl/Dropdown';
 import InputField from 'components/FormControl/InputField';
 import { Province, ProvinceParams } from 'models';
+import { useSnackbar } from 'notistack';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
@@ -12,6 +13,7 @@ export default function DeliveryInfo() {
   const [districtList, setDistrictList] = React.useState<Province[]>([]);
   const [wardList, setWardList] = React.useState<Province[]>([]);
   const [provincesParams, setProvincesParams] = React.useState<ProvinceParams|undefined>()
+  const { enqueueSnackbar } = useSnackbar();
 
 
   useEffect(() => {
@@ -70,7 +72,6 @@ export default function DeliveryInfo() {
     reValidateMode: 'onChange',
   });
   const handleSubmit = (data: any) => {
-    console.log(data);
     form.reset({
       name: '',
       phone: '',
@@ -81,6 +82,11 @@ export default function DeliveryInfo() {
       ward: null,
       note: '',
     })
+
+    console.log(data);
+
+    enqueueSnackbar("Success!", { variant: "success" });
+
   };
 
   const handleChangeProvince = (name: keyof ProvinceParams, value: DropdownData | undefined) => {

@@ -1,10 +1,9 @@
-import { ClassNames } from '@emotion/react';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
+import classNames from 'classnames';
 import { authActions, selectCurrentUser } from 'features/Auth/services/authSlice';
 import { selectCartItemsCount, selectCartNotification } from 'features/Cart/services/cartSlice';
 import { useNavigate } from 'react-router-dom';
 import './styles.scss';
-import classNames from 'classnames';
 export default function Header() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();

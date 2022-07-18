@@ -44,12 +44,12 @@ export default function CartItem({ item }: CartItemProps) {
       </div>
       <div className="p-3 flex flex-col justify-between w-full">
         <div>
-          <p className="font-semibold ">{item.product.name}</p>
+          <p className="font-semibold line-clamp-2">{item.product.name}</p>
         </div>
         <div className="flex justify-between w-full items-center">
           <div>
             <form onSubmit={form.handleSubmit(handleSubmit)}>
-              <QuantityField min={0} form={form} name="quantity" onChange={handleChangeQuantity} />
+              <QuantityField min={1} form={form} name="quantity" onChange={handleChangeQuantity} />
             </form>
           </div>
 

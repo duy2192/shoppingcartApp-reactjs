@@ -122,7 +122,7 @@ const Dropdown = (props: SelectProps) => {
 
                 </div>
                 {haveSearch && (
-                  <div className="block p-2 bg-white dropdown-search ">
+                  <div className="block p-1 bg-white dropdown-search border-t-2">
                     <input
                       type="text"
                       name="search"

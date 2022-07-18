@@ -31,7 +31,7 @@ export default function CartPage() {
               backgroundPosition: 'center',
             }}
           >
-            <Link to="/product" className="p-3 bg-slate-900 text-slate-50 mt-72 font-semibold hover:text-slate-300 ">Tiếp tục mua sắm</Link>
+            <Link to="/product" className="p-3 bg-slate-900 text-slate-50 mt-80 font-semibold hover:text-slate-300 ">Tiếp tục mua sắm</Link>
           </div>
         </>
       )}

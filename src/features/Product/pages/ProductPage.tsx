@@ -1,11 +1,14 @@
 import { productApi } from 'api/productApi';
 import Pagination from 'components/Pagination';
 import { Product, IProductFilters, PaginationParams } from 'models';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import ProductFilters from '../components/ProductFilters';
 import ProductList from '../components/ProductList';
-
+// import queryString from 'query-string';
+import { useLocation, useNavigate } from 'react-router-dom';
 export default function ProductPage() {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [productList, setProductList] = React.useState<Product[]>([]);
   const [pagination, setPagination] = React.useState<PaginationParams>({
     _limit: 3,
@@ -17,6 +20,18 @@ export default function ProductPage() {
     _limit: 3,
     _page: 1,
   });
+
+  // const queryParams = useMemo<IProductFilters>(() => {
+  //   const params: IProductFilters = queryString.parse(location.search);
+  //   return {
+  //     ...params,
+  //     _page: params._page || 1,
+  //     _limit: params._limit || 3,
+  //     _sort: params._sort,
+  //     _order: params._order,
+  //   };
+  // }, [location.search]);
+
   useEffect(() => {
     setLoading(true);
     (async () => {
@@ -24,15 +39,24 @@ export default function ProductPage() {
       setProductList(results);
       setPagination(pagination);
       setLoading(false);
-      console.log(Math.ceil(10 / 3))
     })();
   }, [filters]);
 
   const handlePageChange = (page: number) => {
-    setFilters({ ...filters, _page: page });
+    // const filters = {
+    //   ...queryParams,
+    //   _page: page,
+    // };
+    // navigate(`?${queryString.stringify(filters)}`);
+    setFilters({...filters, _page: page});
   };
   const handleFiltersChange = (newFilters: IProductFilters) => {
-    setFilters({ ...filters, ...newFilters });
+    // const filters = {
+    //   ...queryParams,
+    //   ...newFilters,
+    // };
+    // navigate(`?${queryString.stringify(filters)}`);
+    setFilters({...filters, ...newFilters});
   };
   return (
     <div className="bg-slate-50 min-h-screen">

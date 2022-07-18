@@ -7,7 +7,6 @@ export interface IProductCardProps {
   loading?: boolean;
 }
 export default function ProductCart({ product, loading }: IProductCardProps) {
-
   const dispatch = useAppDispatch();
 
   const { name, price, thumbnails } = product;
@@ -46,13 +45,15 @@ export default function ProductCart({ product, loading }: IProductCardProps) {
       </div>
       {loading ? (
         <div role="status" className="w-full animate-pulse">
-          <div className="h-5 mt-4 ml-2 bg-gray-200 rounded-full dark:bg-gray-700 w-full mb-4"></div>
+          <div className="h-5 mt-4 ml-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px] mb-4"></div>
           <div className="h-3 ml-2 bg-gray-200 rounded-md dark:bg-gray-700 max-w-[360px] mb-2.5"></div>
         </div>
       ) : (
         <form className="flex-auto p-6">
           <div className="flex flex-wrap">
-            <h1 className="flex-auto text-lg font-semibold text-slate-900">{name}</h1>
+            <h1 className="flex-auto text-lg font-semibold text-slate-900 line-clamp-2 ">
+             {name}
+            </h1>
             <div className="text-lg font-semibold text-slate-700">{formatPrice(price)}</div>
             <div className="w-full flex-none text-sm font-medium text-slate-700 mt-2">In stock</div>
           </div>

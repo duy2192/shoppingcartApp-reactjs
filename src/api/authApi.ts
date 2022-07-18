@@ -6,6 +6,10 @@ export const authApi={
     login(data:LoginPayload):Promise<ApiResponse>{
         const url="/auth/login"
         return axiosClient.post(url,data)
-    }
+    },
+    checkToken(token:string):Promise<ApiResponse>{
+        const url="/auth/checkToken"
+        return axiosClient.post(url,{token})
+    },
 }
 
