@@ -1,0 +1,12 @@
+.cart-icon::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: 12px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid #fff;
+  z-index: 1;
+}
