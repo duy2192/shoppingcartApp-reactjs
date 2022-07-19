@@ -35,10 +35,14 @@ export default function ProductPage() {
   useEffect(() => {
     setLoading(true);
     (async () => {
-      const { results, pagination } = await productApi.getAllProduct(filters);
-      setProductList(results);
-      setPagination(pagination);
-      setLoading(false);
+      try {
+        const { results, pagination } = await productApi.getAllProduct(filters);
+        setProductList(results);
+        setPagination(pagination);
+      } catch (error) {
+      } finally {
+        setLoading(false);
+      }
     })();
   }, [filters]);
 
@@ -48,7 +52,7 @@ export default function ProductPage() {
     //   _page: page,
     // };
     // navigate(`?${queryString.stringify(filters)}`);
-    setFilters({...filters, _page: page});
+    setFilters({ ...filters, _page: page });
   };
   const handleFiltersChange = (newFilters: IProductFilters) => {
     // const filters = {
@@ -56,7 +60,7 @@ export default function ProductPage() {
     //   ...newFilters,
     // };
     // navigate(`?${queryString.stringify(filters)}`);
-    setFilters({...filters, ...newFilters});
+    setFilters({ ...filters, ...newFilters });
   };
   return (
     <div className="bg-slate-50 min-h-screen">

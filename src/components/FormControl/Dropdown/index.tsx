@@ -4,8 +4,8 @@ export interface DropdownData {
   text: string;
   value: string | null;
 }
-export interface FormDropdownData {
-  [key: string]: DropdownData | null | any;
+export interface FormDropdownData<T = any> {
+  [key: string]: T | null;
 }
 export interface SelectProps {
   haveSearch?: boolean;
@@ -106,20 +106,19 @@ const Dropdown = (props: SelectProps) => {
                 className="z-10 absolute left-0 right-0 bg-white border rounded-lg 
               dropdown-list top-full border-slate-100 select-none"
               >
-                <div className='max-h-60 overflow-y-scroll'>
-                {dataDropdown?.map((item, index) => (
-                  <span
-                    onClick={() => {
-                      onChange(item);
-                      handleClickItem(item);
-                    }}
-                    key={index}
-                    className="block p-2  cursor-pointer hover:bg-slate-100"
-                  >
-                    {item.text}
-                  </span>
-                ))}
-
+                <div className="max-h-60 overflow-y-scroll">
+                  {dataDropdown?.map((item, index) => (
+                    <span
+                      onClick={() => {
+                        onChange(item);
+                        handleClickItem(item);
+                      }}
+                      key={index}
+                      className="block p-2  cursor-pointer hover:bg-slate-100"
+                    >
+                      {item.text}
+                    </span>
+                  ))}
                 </div>
                 {haveSearch && (
                   <div className="block p-1 bg-white dropdown-search border-t-2">

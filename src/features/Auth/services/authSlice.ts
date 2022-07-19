@@ -3,53 +3,52 @@ import { authApi } from 'api/authApi';
 import { User } from 'models/User';
 
 export interface LoginPayload {
-    identifier:string;
-    password:string;
+  identifier: string;
+  password: string;
 }
 
 export interface AuthState {
-  user:User|null;
-  token:string|null
+  user: User | null;
+  token: string | null;
 }
 
-export const login = createAsyncThunk('auth/login', async (payload:LoginPayload) => {
-    const data = await authApi.login(payload);
+export const login = createAsyncThunk('auth/login', async (payload: LoginPayload) => {
+  const data = await authApi.login(payload);
 
-    return data.results;
+  return data.results;
 });
 
-
-const initialState:AuthState = {
+const initialState: AuthState = {
   user: null,
-  token:null
+  token: null,
 };
 
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {    
+  reducers: {
     logout(state) {
-    state.user = null;
-    state.token = null;
-    }
+      state.user = null;
+      state.token = null;
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(login.fulfilled, (state, action) => {
         state.user = action.payload.user;
         state.token = action.payload.token;
-      }
-      ).addCase(login.rejected, (state, action) => {
+      })
+      .addCase(login.rejected, (state, action) => {
         state.user = null;
         state.token = null;
-      })
+      });
   },
 });
 
 // Actions
 export const authActions = authSlice.actions;
-export const selectCurrentUser = (state:any) => state.auth.user;
-export const selectToken = (state:any) => state.auth.token;
+export const selectCurrentUser = (state: any) => state.auth.user;
+export const selectToken = (state: any) => state.auth.token;
 // Selectors
 
 // Reducer

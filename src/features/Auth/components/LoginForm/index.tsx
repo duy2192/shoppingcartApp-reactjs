@@ -8,9 +8,10 @@ import * as yup from 'yup';
 export interface ILoginFormProps {
   initialValues: LoginPayload;
   onSubmit: (values: LoginPayload) => void;
+  loading?: boolean;
 }
 
-export default function LoginForm({ initialValues, onSubmit }: ILoginFormProps) {
+export default function LoginForm({ initialValues, onSubmit, loading = false }: ILoginFormProps) {
   const schema = yup.object().shape({
     identifier: yup.string().required('Vui lòng nhập Email hoặc Tên tài khoản!'),
     password: yup.string().required('Vui lòng nhập mật khẩu!'),
@@ -34,7 +35,7 @@ export default function LoginForm({ initialValues, onSubmit }: ILoginFormProps) 
             name="identifier"
             label="Tài khoản"
             form={form}
-            disabled={form.formState.isSubmitting}
+            disabled={loading}
             placeholder="Tài khoản"
             className="w-96"
           />
@@ -42,15 +43,17 @@ export default function LoginForm({ initialValues, onSubmit }: ILoginFormProps) 
             name="password"
             label="Mật khẩu"
             form={form}
-            disabled={form.formState.isSubmitting}
+            disabled={loading}
             className="mt-2 w-96"
             placeholder="Mật khẩu"
             type="password"
           />
 
-          <button className="bg-slate-900 p-2 w-full text-slate-50 rounded-md mt-4 mb-3"  disabled={form.formState.isSubmitting}
->
-            {form.formState.isSubmitting? (
+          <button
+            className="bg-slate-900 p-2 w-full text-slate-50 rounded-md mt-4 mb-3"
+            disabled={form.formState.isSubmitting}
+          >
+            {loading ? (
               <div role="status" className="flex justify-center items-center">
                 <svg
                   aria-hidden="true"
