@@ -11,7 +11,7 @@ const Login = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
-  const initialValues = {
+  const initialValues: LoginPayload = {
     identifier: '',
     password: '',
   };
