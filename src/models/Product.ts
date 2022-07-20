@@ -1,5 +1,3 @@
-import { DropdownData } from 'components/FormControl/Dropdown';
-
 export interface Product {
   _id: string;
   name: string;

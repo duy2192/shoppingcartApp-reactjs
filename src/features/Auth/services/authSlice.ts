@@ -6,6 +6,13 @@ export interface LoginPayload {
   identifier: string;
   password: string;
 }
+export interface RegisterPayload {
+  email: string;
+  username: string;
+  password: string;
+  repeatPassword: string;
+  name: string;
+}
 
 export interface AuthState {
   user: User | null;
@@ -14,6 +21,11 @@ export interface AuthState {
 
 export const login = createAsyncThunk('auth/login', async (payload: LoginPayload) => {
   const data = await authApi.login(payload);
+
+  return data.results;
+});
+export const register = createAsyncThunk('auth/register', async (payload: RegisterPayload) => {
+  const data = await authApi.register(payload);
 
   return data.results;
 });

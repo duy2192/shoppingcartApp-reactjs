@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
 import { authActions, selectToken } from './services/authSlice';
 
 export interface IAuthProps {}
@@ -28,6 +29,7 @@ export default function AuthFeature() {
     <Routes>
       <Route path="/" element={<Navigate to="login" />}></Route>
       <Route path="/login" element={<LoginPage />}></Route>
+      <Route path="/register" element={<RegisterPage />}></Route>
       <Route path="*" element={<NotFound />}></Route>
     </Routes>
   );

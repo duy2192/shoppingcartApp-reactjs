@@ -1,28 +1,30 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import InputField from 'components/FormControl/InputField';
-import { LoginPayload } from 'features/Auth/services/authSlice';
+import { RegisterPayload } from 'features/Auth/services/authSlice';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import * as yup from 'yup';
-import { IRegisterFormProps } from '../RegisterForm';
 
-export interface ILoginFormProps {
-  initialValues: LoginPayload;
-  onSubmit: (values: LoginPayload) => void;
+export interface IRegisterFormProps {
+  initialValues: RegisterPayload;
+  onSubmit: (values: RegisterPayload) => void;
   loading?: boolean;
 }
 
-export default function LoginForm({ initialValues, onSubmit, loading = false }: ILoginFormProps) {
+export default function RegisterForm({ initialValues, onSubmit, loading = false }: IRegisterFormProps) {
   const schema = yup.object().shape({
-    identifier: yup.string().required('Vui lòng nhập Email hoặc Tên tài khoản!'),
-    password: yup.string().required('Vui lòng nhập mật khẩu!'),
+    email: yup.string().email('Email không hợp lệ!').required('Email không được để trống!'),
+    username: yup.string().required('Tên tài khoản không được để trống!'),
+    name: yup.string().required('Tên không được để trống!'),
+    password: yup.string().required('Mật khẩu không được để trống!'),
+    repeatPassword: yup.string().oneOf([yup.ref('password'), null], 'Mật khẩu không khớp!'),
   });
   const form = useForm({
     defaultValues: initialValues,
     resolver: yupResolver(schema),
     reValidateMode: 'onChange',
   });
-  const handleSubmit = (value: LoginPayload) => {
+  const handleSubmit = (value: RegisterPayload) => {
     onSubmit?.(value);
   };
   return (
@@ -33,12 +35,28 @@ export default function LoginForm({ initialValues, onSubmit, loading = false }: 
       <div className="flex items-center justify-center flex-col">
         <form onSubmit={form.handleSubmit(handleSubmit)}>
           <InputField
-            name="identifier"
-            label="Tài khoản"
+            name="email"
+            label="Email"
             form={form}
             disabled={loading}
-            placeholder="Tài khoản"
-            className="w-96"
+            placeholder="Email"
+            className="mt-2 w-96"
+          />
+          <InputField
+            name="username"
+            label="Tên tài khoản"
+            form={form}
+            disabled={loading}
+            placeholder="Tên tài khoản"
+            className="mt-2 w-96"
+          />
+          <InputField
+            name="name"
+            label="Họ tên"
+            form={form}
+            disabled={loading}
+            placeholder="Họ tên"
+            className="mt-2 w-96"
           />
           <InputField
             name="password"
@@ -47,6 +65,15 @@ export default function LoginForm({ initialValues, onSubmit, loading = false }: 
             disabled={loading}
             className="mt-2 w-96"
             placeholder="Mật khẩu"
+            type="password"
+          />
+          <InputField
+            name="repeatPassword"
+            label="Xác nhận Mật khẩu"
+            form={form}
+            disabled={loading}
+            className="mt-2 w-96"
+            placeholder="Xác nhận Mật khẩu"
             type="password"
           />
 
@@ -75,11 +102,9 @@ export default function LoginForm({ initialValues, onSubmit, loading = false }: 
             )}
           </button>
           <div className="flex justify-between">
-            <Link className="font-semibold " to="/auth/forgot">
-              Quên mật khẩu?
-            </Link>
-            <Link className="font-semibold " to="/auth/register">
-              {'Bạn chưa có tài khoản? Đăng ký'}
+            <p className="font-semibold "></p>
+            <Link className="font-semibold " to="/auth/login">
+              {'Bạn đã có tài khoản? Đăng nhập'}
             </Link>
           </div>
         </form>

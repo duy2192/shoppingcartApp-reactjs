@@ -12,7 +12,7 @@ export default function ProductCart({ product, loading }: IProductCardProps) {
   const { name, price, thumbnails } = product;
 
   const handleAddToCart = async () => {
-    dispatch(cartActions.addToCart({ newProduct: product, quantity: 1 }));
+    dispatch(cartActions.addToCart({ product: product, quantity: 1 }));
     dispatch(cartActions.showCartNotification(thumbnails[0]));
 
     await new Promise((resolve) => setTimeout(resolve, 3000));
@@ -51,9 +51,7 @@ export default function ProductCart({ product, loading }: IProductCardProps) {
       ) : (
         <form className="flex-auto p-6">
           <div className="flex flex-wrap">
-            <h1 className="flex-auto text-lg font-semibold text-slate-900 line-clamp-2 ">
-             {name}
-            </h1>
+            <h1 className="flex-auto text-lg font-semibold text-slate-900 line-clamp-2 ">{name}</h1>
             <div className="text-lg font-semibold text-slate-700">{formatPrice(price)}</div>
             <div className="w-full flex-none text-sm font-medium text-slate-700 mt-2">In stock</div>
           </div>

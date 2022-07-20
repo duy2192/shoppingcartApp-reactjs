@@ -1,17 +1,17 @@
 import background from 'assets/img/background_auth.png';
-import Login from '../components/Login';
+import Register from '../components/Register';
 
-export default function LoginPage() {
+export default function RegisterPage() {
   return (
     <div
-      className="h-screen "
+      className="h-[calc(100vh_-_120px)] "
       style={{
         backgroundImage: `url(${background})`,
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
       }}
     >
-      <Login />
+      <Register />
     </div>
   );
 }

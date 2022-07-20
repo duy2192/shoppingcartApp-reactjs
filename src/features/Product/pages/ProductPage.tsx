@@ -11,13 +11,13 @@ export default function ProductPage() {
   const location = useLocation();
   const [productList, setProductList] = React.useState<Product[]>([]);
   const [pagination, setPagination] = React.useState<PaginationParams>({
-    _limit: 3,
+    _limit: 6,
     _page: 1,
     _total: 0,
   });
   const [loading, setLoading] = React.useState(true);
   const [filters, setFilters] = React.useState<IProductFilters>({
-    _limit: 3,
+    _limit: 6,
     _page: 1,
   });
 
