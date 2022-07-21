@@ -4,7 +4,7 @@ import Login from '../components/Login';
 export default function LoginPage() {
   return (
     <div
-      className="h-[calc(100vh_-_120px)] "
+      className="h-[calc(100vh_-_120px)] min-h-[400px]"
       style={{
         backgroundImage: `url(${background})`,
         backgroundRepeat: 'no-repeat',

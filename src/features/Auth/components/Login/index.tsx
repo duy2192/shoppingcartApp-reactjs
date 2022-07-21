@@ -1,7 +1,7 @@
 import { unwrapResult } from '@reduxjs/toolkit';
-import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { useAppDispatch } from 'app/hooks';
 import { login, LoginPayload } from 'features/Auth/services/authSlice';
-import { cartActions, ICartItem, selectCartItems } from 'features/Cart/services/cartSlice';
+import { cartActions } from 'features/Cart/services/cartSlice';
 import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -13,7 +13,6 @@ const Login = () => {
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const currentCart = useAppSelector(selectCartItems);
   const { enqueueSnackbar } = useSnackbar();
   const initialValues: LoginPayload = {
     identifier: '',
@@ -27,10 +26,10 @@ const Login = () => {
 
       const { user } = await unwrapResult(resultAction);
 
-      const newCart = user.cart;
-      dispatch(cartActions.setCart(newCart));
-      navigate('/product'); //
+      dispatch(cartActions.mergeCart(user.cart));
+      navigate('/product');
     } catch (error: any) {
+      console.log(error);
       enqueueSnackbar(error.message, { variant: 'error' }); //
     } finally {
       setLoading(false);

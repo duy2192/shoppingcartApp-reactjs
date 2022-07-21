@@ -14,7 +14,7 @@ export default function Header() {
   const handleLogout = () => {
     dispatch(authActions.logout());
     dispatch(cartActions.setCart([]));
-    navigate('/auth/login');
+    navigate('/');
   };
 
   const handleToCartPage = () => {

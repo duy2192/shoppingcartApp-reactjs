@@ -19,7 +19,7 @@ export default function ProductFilters({ onChange }: IProductFiltersProps) {
   });
   const handleChange = () => {
     const filters = form.getValues();
-    onChange({ ...filters, category: filters?.category.value });
+    onChange({ ...filters, category: filters?.category?.value });
   };
   return (
     <div className="flex items-center px-20 border-b-2 py-5">

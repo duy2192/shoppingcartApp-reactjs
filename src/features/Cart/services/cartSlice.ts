@@ -1,5 +1,8 @@
-import { createAsyncThunk, createSelector, createSlice, Dispatch } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit';
+import { purchaseOrderApi, userApi } from 'api';
 import { Product } from 'models';
+import { PurchaseOrder } from 'models/PurchaseOrder';
+import { mergeCart } from 'utils';
 
 export interface ICartItem {
   product: Product;
@@ -16,12 +19,30 @@ const initialState: CartState = {
   cartNotification: '',
 };
 
+export const submitPurchaseOrderGuest = createAsyncThunk(
+  'cart/submitGuest',
+  async (payload: PurchaseOrder) => {
+    const { results } = await purchaseOrderApi.createPurchaseOrder(payload);
+
+    return results;
+  }
+);
+export const submitPurchaseOrderUser = createAsyncThunk('cart/submitUser', async (payload: PurchaseOrder) => {
+  const { results } = await userApi.createPurchaseOrder(payload);
+
+  return results;
+});
+
 const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
     showCartNotification(state, action) {
       state.cartNotification = action.payload;
+    },
+    mergeCart(state, action) {
+      const currentCart = [...state.cartItems];
+      state.cartItems = mergeCart(currentCart, action.payload);
     },
     setCart(state, action) {
       state.cartItems = action.payload;
@@ -45,20 +66,6 @@ const cartSlice = createSlice({
         state.cartItems.splice(index, 1);
       }
     },
-    decreaseQuantity(state, action) {
-      const productId = action.payload;
-      const index = state.cartItems.findIndex((item) => item.product._id === productId);
-      if (index >= 0) {
-        state.cartItems[index].quantity--;
-      }
-    },
-    increaseQuantity(state, action) {
-      const productId = action.payload;
-      const index = state.cartItems.findIndex((item) => item.product._id === productId);
-      if (index >= 0) {
-        state.cartItems[index].quantity++;
-      }
-    },
     setQuantity(state, action) {
       const { productId, quantity } = action.payload;
       const index = state.cartItems.findIndex((item) => item.product._id === productId);
@@ -66,6 +73,17 @@ const cartSlice = createSlice({
         state.cartItems[index].quantity = quantity;
       }
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(submitPurchaseOrderUser.fulfilled, (state, action) => {
+        state.cartItems = [];
+      })
+      .addCase(submitPurchaseOrderUser.rejected, (state, action) => {})
+      .addCase(submitPurchaseOrderGuest.fulfilled, (state, action) => {
+        state.cartItems = [];
+      })
+      .addCase(submitPurchaseOrderGuest.rejected, (state, action) => {});
   },
 });
 
