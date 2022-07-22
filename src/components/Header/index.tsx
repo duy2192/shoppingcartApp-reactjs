@@ -1,21 +1,16 @@
-import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { useAppSelector } from 'app/hooks';
 import classNames from 'classnames';
-import { authActions, selectCurrentUser } from 'features/Auth/services/authSlice';
-import { cartActions, selectCartItemsCount, selectCartNotification } from 'features/Cart/services/cartSlice';
+import { selectCurrentUser } from 'features/Auth/services/authSlice';
+import { selectCartItemsCount, selectCartNotification } from 'features/Cart/services/cartSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './styles.scss';
+import UserMenu from './UserMenu';
 export default function Header() {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const location = useLocation();
   const user = useAppSelector(selectCurrentUser);
   const cartItemsCount = useAppSelector(selectCartItemsCount);
   const cartNotification = useAppSelector(selectCartNotification);
-  const handleLogout = () => {
-    dispatch(authActions.logout());
-    dispatch(cartActions.setCart([]));
-    navigate('/');
-  };
 
   const handleToCartPage = () => {
     navigate('/cart');
@@ -44,7 +39,7 @@ export default function Header() {
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
-              d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+              d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
             />
           </svg>
           {cartItemsCount > 0 && (
@@ -73,12 +68,9 @@ export default function Header() {
         {location.pathname.split('/')[1] !== 'auth' && (
           <div>
             {user ? (
-              <button
-                className="w-auto p-2  rounded-md  bg-black text-slate-50 mx-auto font-semibold"
-                onClick={handleLogout}
-              >
-                Logout
-              </button>
+              <>
+                <UserMenu />
+              </>
             ) : (
               <button
                 className="w-auto p-2  rounded-md  bg-black text-slate-50 mx-auto font-semibold"

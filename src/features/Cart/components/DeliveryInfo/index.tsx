@@ -30,9 +30,9 @@ export default function DeliveryInfo() {
         await unwrapResult(resultAction);
       }
 
-      enqueueSnackbar('Success!', { variant: 'success' });
+      enqueueSnackbar('Đặt hàng thành công!', { variant: 'success' });
     } catch (error) {
-      enqueueSnackbar('Error!', { variant: 'error' });
+      enqueueSnackbar('Lỗi!', { variant: 'error' });
     }
   };
 

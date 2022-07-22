@@ -16,7 +16,8 @@ export default function CartItem({ item }: CartItemProps) {
       .number()
       .required('Chọn số lượng!')
       .min(1, 'Số lượng phải lớn hơn 0')
-      .typeError('Số lượng phải lớn hơn 0'),
+      .typeError('Số lượng phải lớn hơn 0')
+      .integer('Số lượng không hợp lệ'),
   });
   const form = useForm({
     defaultValues: {

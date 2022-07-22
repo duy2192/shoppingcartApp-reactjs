@@ -6,7 +6,7 @@ export interface IFilterByCategoriesProps {
   name: string;
   onChange: () => void;
 }
-export default function FilterByCategories({ form ,name,onChange}: IFilterByCategoriesProps) {
+export default function FilterByCategories({ form, name, onChange }: IFilterByCategoriesProps) {
   const [categoryList, setCategoryList] = React.useState<DropdownData[]>([
     {
       text: '----',
@@ -27,8 +27,14 @@ export default function FilterByCategories({ form ,name,onChange}: IFilterByCate
     })();
   }, []);
   return (
-    <div className="w-60">
-      <Dropdown onChange={onChange} className='w-full' label="Danh mục" placeholder="Tìm kiếm ..." name={name} form={form} data={categoryList} />
-    </div>
+    <Dropdown
+      onChange={onChange}
+      className="w-60"
+      label="Danh mục"
+      placeholder="Tìm kiếm ..."
+      name={name}
+      form={form}
+      data={categoryList}
+    />
   );
 }

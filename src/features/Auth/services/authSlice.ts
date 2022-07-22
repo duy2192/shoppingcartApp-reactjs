@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { authApi } from 'api/authApi';
+import { RootState } from 'app/store';
 import { User } from 'models/User';
 
 export interface LoginPayload {
@@ -42,8 +43,7 @@ const authSlice = createSlice({
     logout(state) {
       state.user = null;
       state.token = null;
-      localStorage.setItem("token","");
-
+      localStorage.setItem('token', '');
     },
   },
   extraReducers: (builder) => {
@@ -51,7 +51,7 @@ const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.user = action.payload.user;
         state.token = action.payload.token;
-        localStorage.setItem("token", action.payload.token);
+        localStorage.setItem('token', action.payload.token);
       })
       .addCase(login.rejected, (state, action) => {
         state.user = null;
@@ -62,8 +62,8 @@ const authSlice = createSlice({
 
 // Actions
 export const authActions = authSlice.actions;
-export const selectCurrentUser = (state: any) => state.auth.user;
-export const selectToken = (state: any) => state.auth.token;
+export const selectCurrentUser = (state: RootState) => state.auth.user;
+export const selectToken = (state: RootState) => state.auth.token;
 // Selectors
 
 // Reducer

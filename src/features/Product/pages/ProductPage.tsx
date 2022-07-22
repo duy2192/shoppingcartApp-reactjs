@@ -60,7 +60,7 @@ export default function ProductPage() {
     //   ...newFilters,
     // };
     // navigate(`?${queryString.stringify(filters)}`);
-    setFilters({ ...filters, ...newFilters });
+    setFilters({ ...filters, ...newFilters, _page: 1 });
   };
   return (
     <div className="bg-slate-50 min-h-screen">
@@ -70,7 +70,7 @@ export default function ProductPage() {
       <div>
         <ProductList productList={productList} loading={loading} />
       </div>
-      <div className="flex justify-center mt-10">
+      <div className="flex justify-center mt-10 py-10">
         {pagination._total > 0 && (
           <Pagination
             page={filters._page || 1}

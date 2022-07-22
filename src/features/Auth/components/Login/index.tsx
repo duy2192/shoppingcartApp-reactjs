@@ -29,7 +29,6 @@ const Login = () => {
       dispatch(cartActions.mergeCart(user.cart));
       navigate('/product');
     } catch (error: any) {
-      console.log(error);
       enqueueSnackbar(error.message, { variant: 'error' }); //
     } finally {
       setLoading(false);

@@ -1,13 +1,37 @@
-import { useAppSelector } from 'app/hooks';
-import emptyCart from 'assets/img/emptyCart.png';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+import emptyCart from 'assets/img/emptyCart.mp4';
+import purchaseSuccess from 'assets/img/purchaseCompleted.mp4';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import CartInfo from '../components/CartInfo';
 import DeliveryInfo from '../components/DeliveryInfo';
-import { selectCartItems } from '../services/cartSlice';
-
+import { cartActions, selectCartItems, selectCompletedCart } from '../services/cartSlice';
 export default function CartPage() {
   const cartItems = useAppSelector(selectCartItems);
-
+  const completedOrder = useAppSelector(selectCompletedCart);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    return () => {
+      dispatch(cartActions.completedOrder(false));
+    };
+  }, [dispatch]);
+  if (completedOrder) {
+    return (
+      <>
+        <div className="h-80 w-full flex flex-col items-center mb-[320px]">
+          <video autoPlay={true} loop muted>
+            <source src={purchaseSuccess} type="video/mp4"></source>
+          </video>
+          <p className="font-6xl font-semibold text-slate-900 mb-10">
+            Đặt hàng thành công! Kiểm tra email để biết thêm thông tin
+          </p>
+          <Link to="/product" className="p-3 bg-slate-900 text-slate-50  font-semibold hover:text-slate-300 ">
+            Tiếp tục mua sắm
+          </Link>
+        </div>
+      </>
+    );
+  }
   return (
     <>
       {cartItems.length > 0 ? (
@@ -22,16 +46,16 @@ export default function CartPage() {
         </div>
       ) : (
         <>
-          <div
-            className="mt-32 h-60 mb-80 flex items-center justify-center"
-            style={{
-              backgroundImage: `url(${emptyCart})`,
-              backgroundRepeat: 'no-repeat',
-              backgroundSize: 'contain',
-              backgroundPosition: 'center',
-            }}
-          >
-            <Link to="/product" className="p-3 bg-slate-900 text-slate-50 mt-80 font-semibold hover:text-slate-300 ">Tiếp tục mua sắm</Link>
+          <div className="h-80 w-full flex flex-col items-center mb-[320px]">
+            <video autoPlay={true} loop muted>
+              <source src={emptyCart} type="video/mp4"></source>
+            </video>
+            <Link
+              to="/product"
+              className="p-3 bg-slate-900 text-slate-50  font-semibold hover:text-slate-300 "
+            >
+              Tiếp tục mua sắm
+            </Link>
           </div>
         </>
       )}

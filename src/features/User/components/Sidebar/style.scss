@@ -1,0 +1,18 @@
+.active {
+    background-color: #dfe6e9;
+    font-weight: 500;
+    position: relative;
+
+    &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        top: 0;
+        width: 6px;
+        height: auto;
+        background-color: #2d3436;
+        transform-origin: left;
+        transition: transform 0.3s ease-in-out;
+    }
+}

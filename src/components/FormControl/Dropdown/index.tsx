@@ -74,7 +74,7 @@ const Dropdown = (props: SelectProps) => {
               className="flex items-center justify-between p-2 border rounded-lg cursor-pointer border-slate-100 z-0"
               onClick={handleToggleDropdown}
             >
-              <span className="font-semibold z-0">{value?.text || label}</span>
+              <span className="font-semibold z-0 select-none">{value?.text || label}</span>
               {haveIcon && (
                 <span>
                   {showDropdown ? (
@@ -134,7 +134,7 @@ const Dropdown = (props: SelectProps) => {
               </div>
             )}
           </div>
-          <span className="text-red-500 font-semibold text-xs block mt-2">{error?.message}</span>
+          {error && <span className="text-red-500 font-semibold text-xs block mt-2">{error?.message}</span>}
         </div>
       )}
     />

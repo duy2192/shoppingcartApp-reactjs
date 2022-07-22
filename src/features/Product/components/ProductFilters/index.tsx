@@ -26,8 +26,8 @@ export default function ProductFilters({ onChange }: IProductFiltersProps) {
       <div className="">
         <span className="font-semibold text-2xl select-none block">Sản phẩm</span>
       </div>
-      <div className="flex items-center ml-8 ">
-        <form className="flex flex-wrap gap-5 ">
+      <div className="ml-8 ">
+        <form className="flex flex-wrap gap-5 items-center">
           <div className="">
             <FilterBySearch form={form} name="_search" onChange={handleChange} />
           </div>

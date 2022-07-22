@@ -1,13 +1,15 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { commonApi } from 'api';
+import { useAppSelector } from 'app/hooks';
 import Dropdown, { DropdownData, FormDropdownData } from 'components/FormControl/Dropdown';
 import InputField from 'components/FormControl/InputField';
+import { selectCurrentUser } from 'features/Auth/services/authSlice';
 import { Province, ProvinceParams } from 'models';
 import { PurchaseOrder } from 'models/PurchaseOrder';
-import { useSnackbar } from 'notistack';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
+import { PHONE_REGEX } from 'constants/index';
 export interface IOrderBillSubmitProps {
   onSubmit: (data: PurchaseOrder) => void;
 }
@@ -16,8 +18,7 @@ export default function OrderBillSubmit({ onSubmit }: IOrderBillSubmitProps) {
   const [districtList, setDistrictList] = React.useState<Province[]>([]);
   const [wardList, setWardList] = React.useState<Province[]>([]);
   const [provincesParams, setProvincesParams] = React.useState<ProvinceParams | undefined>();
-  const { enqueueSnackbar } = useSnackbar();
-
+  const currenUser = useAppSelector(selectCurrentUser);
   useEffect(() => {
     (async () => {
       try {
@@ -39,6 +40,8 @@ export default function OrderBillSubmit({ onSubmit }: IOrderBillSubmitProps) {
     name: yup.string().required('Họ tên không được để trống!').typeError('Họ tên không được để trống!'),
     phone: yup
       .string()
+      .matches(PHONE_REGEX, 'Số điện thoại không hợp lệ!')
+      .min(10, 'Số điện thoại không hợp lệ!')
       .required('Số điện thoại không được để trống!')
       .typeError('Số điện thoại không được để trống!'),
     address: yup.string().required('Địa chỉ không được để trống!').typeError('Địa chỉ không được để trống!'),
@@ -60,10 +63,10 @@ export default function OrderBillSubmit({ onSubmit }: IOrderBillSubmitProps) {
   });
   const form = useForm<FormDropdownData>({
     defaultValues: {
-      name: '',
-      phone: '',
-      address: '',
-      email: '',
+      name: currenUser?.name || '',
+      phone: currenUser?.phone || '',
+      address: currenUser?.address || '',
+      email: currenUser?.email || '',
       city: null,
       district: null,
       ward: null,
@@ -73,29 +76,29 @@ export default function OrderBillSubmit({ onSubmit }: IOrderBillSubmitProps) {
     reValidateMode: 'onChange',
   });
   const handleSubmit = async (data: any) => {
-    try {
-      const billInfo: PurchaseOrder = {
-        ...data,
-        city: data.city.text,
-        district: data.district.text,
-        ward: data.ward.text,
-      };
+    const billInfo: PurchaseOrder = {
+      ...data,
+      city: data.city.text,
+      district: data.district.text,
+      ward: data.ward.text,
+    };
 
-      onSubmit(billInfo);
-      form.reset({
-        name: '',
-        phone: '',
-        address: '',
-        email: '',
-        city: null,
-        district: null,
-        ward: null,
-        note: '',
-      });
-    } catch (error) {}
+    onSubmit(billInfo);
+    form.reset({
+      name: '',
+      phone: '',
+      address: '',
+      email: '',
+      city: null,
+      district: null,
+      ward: null,
+      note: '',
+    });
   };
 
   const handleChangeProvince = (name: keyof ProvinceParams, value: DropdownData | undefined) => {
+    if (name === 'city') form.setValue('district', null);
+    if (name === 'district') form.setValue('ward', null);
     const { city } = form.getValues();
     setProvincesParams({ city: city?.value, [name]: value?.value });
   };
@@ -116,7 +119,7 @@ export default function OrderBillSubmit({ onSubmit }: IOrderBillSubmitProps) {
           <div className="md:flex gap-3 mt-4 md:flex-wrap sm:block">
             <Dropdown
               onChange={(value) => handleChangeProvince('city', value)}
-              className="md:flex-1 sm:w-full"
+              className="md:flex-1 sm:w-full mt-3"
               name="city"
               form={form}
               data={cityList}
@@ -125,7 +128,7 @@ export default function OrderBillSubmit({ onSubmit }: IOrderBillSubmitProps) {
             />
             <Dropdown
               onChange={(value) => handleChangeProvince('district', value)}
-              className="md:flex-1 sm:w-full"
+              className="md:flex-1 sm:w-full mt-3"
               name="district"
               form={form}
               data={districtList}
@@ -133,7 +136,7 @@ export default function OrderBillSubmit({ onSubmit }: IOrderBillSubmitProps) {
               placeholder="Tìm kiếm ..."
             />
             <Dropdown
-              className="md:flex-1 sm:w-full"
+              className="md:flex-1 sm:w-full mt-3"
               name="ward"
               form={form}
               data={wardList}

@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit';
 import { purchaseOrderApi, userApi } from 'api';
+import { RootState } from 'app/store';
 import { Product } from 'models';
 import { PurchaseOrder } from 'models/PurchaseOrder';
 import { mergeCart } from 'utils';
@@ -12,11 +13,13 @@ export interface ICartItem {
 export interface CartState {
   cartItems: ICartItem[];
   cartNotification: string;
+  completedOrder: boolean;
 }
 
 const initialState: CartState = {
   cartItems: [],
   cartNotification: '',
+  completedOrder: false,
 };
 
 export const submitPurchaseOrderGuest = createAsyncThunk(
@@ -73,15 +76,20 @@ const cartSlice = createSlice({
         state.cartItems[index].quantity = quantity;
       }
     },
+    completedOrder(state, action) {
+      state.completedOrder = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(submitPurchaseOrderUser.fulfilled, (state, action) => {
         state.cartItems = [];
+        state.completedOrder = true;
       })
       .addCase(submitPurchaseOrderUser.rejected, (state, action) => {})
       .addCase(submitPurchaseOrderGuest.fulfilled, (state, action) => {
         state.cartItems = [];
+        state.completedOrder = true;
       })
       .addCase(submitPurchaseOrderGuest.rejected, (state, action) => {});
   },
@@ -91,7 +99,7 @@ const cartSlice = createSlice({
 export const cartActions = cartSlice.actions;
 
 // Selectors
-export const selectCartItems = (state: any) => state.cart.cartItems;
+export const selectCartItems = (state: RootState) => state.cart.cartItems;
 
 export const selectCartItemsCount = createSelector(selectCartItems, (cartItems) =>
   cartItems.reduce((count: number, item: ICartItem) => count + item.quantity, 0)
@@ -101,7 +109,8 @@ export const selectCartTotal = createSelector(selectCartItems, (cartItems) =>
   cartItems.reduce((total: number, item: ICartItem) => total + item.product.price * item.quantity, 0)
 );
 
-export const selectCartNotification = (state: any) => state.cart.cartNotification;
+export const selectCartNotification = (state: RootState) => state.cart.cartNotification;
+export const selectCompletedCart = (state: RootState) => state.cart.completedOrder;
 
 // Reducer
 const cartReducer = cartSlice.reducer;
