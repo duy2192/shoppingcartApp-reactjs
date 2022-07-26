@@ -11,8 +11,4 @@ export const authApi = {
     const url = '/auth/register';
     return axiosClient.post(url, data);
   },
-  checkToken(token: string): Promise<ApiResponse> {
-    const url = '/auth/checkToken';
-    return axiosClient.post(url, { token });
-  },
 };

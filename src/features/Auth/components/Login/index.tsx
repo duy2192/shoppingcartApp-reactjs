@@ -5,7 +5,7 @@ import { cartActions } from 'features/Cart/services/cartSlice';
 import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import LoginForm from '../LoginForm';
+import LoginForm from './LoginForm';
 
 export interface ILoginProps {}
 

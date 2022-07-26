@@ -33,6 +33,7 @@ export default function DeliveryInfo() {
       enqueueSnackbar('Đặt hàng thành công!', { variant: 'success' });
     } catch (error) {
       enqueueSnackbar('Lỗi!', { variant: 'error' });
+      throw error;
     }
   };
 

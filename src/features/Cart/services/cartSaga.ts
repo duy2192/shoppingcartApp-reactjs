@@ -1,10 +1,7 @@
-import { PayloadAction } from '@reduxjs/toolkit';
 import { userApi } from 'api';
 import { selectCurrentUser } from 'features/Auth/services/authSlice';
 import { ApiResponse, User } from 'models';
-import { PurchaseOrder } from 'models/PurchaseOrder';
-import { Action } from 'redux';
-import { call, put, select, takeLatest } from 'redux-saga/effects';
+import { call, select, takeLatest } from 'redux-saga/effects';
 import { cartActions, ICartItem, selectCartItems } from './cartSlice';
 
 function* handleUpdateCart() {

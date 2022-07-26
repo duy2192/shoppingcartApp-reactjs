@@ -31,11 +31,16 @@ function UserMenu() {
     navigate('/');
   };
   return (
-    <div className="flex justify-center p-12 select-none">
+    <div className="flex justify-center  select-none">
       <div className="relative" ref={dropdownRef}>
-        <button className="block h-12 w-12 rounded-full overflow-hidden focus:outline-none shadow-md flex justify-center items-center">
+        <button className="h-12 w-12 rounded-full overflow-hidden focus:outline-none shadow-md flex justify-center items-center">
           {currentUser?.avatar ? (
-            <img className="h-8 w-8 object-cover" src={currentUser?.avatar || avatar} alt="avatar" />
+            <img
+              loading="lazy"
+              className="h-12 w-12 object-center"
+              src={currentUser?.avatar || avatar}
+              alt="avatar"
+            />
           ) : (
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -56,6 +61,12 @@ function UserMenu() {
         {open && (
           <div className="absolute right-0 w-40 mt-2 py-2 bg-white border rounded shadow-xl">
             <ul className="">
+              <Link
+                className="hover:no-underline block p-2 text-slate-900 font-semibold hover:bg-slate-700 hover:text-slate-200 cursor-pointer"
+                to="/user/"
+              >
+                Thông tin cá nhân
+              </Link>
               <Link
                 className="hover:no-underline block p-2 text-slate-900 font-semibold hover:bg-slate-700 hover:text-slate-200 cursor-pointer"
                 to="/user/account"

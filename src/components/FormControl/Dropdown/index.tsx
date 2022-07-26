@@ -1,13 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
-import { Controller, UseFormReturn } from 'react-hook-form';
-export interface DropdownData {
+import { Controller } from 'react-hook-form';
+
+export interface DropdownData<T = string> {
   text: string;
-  value: string | null;
+  value: T | null;
 }
-export interface FormDropdownData<T = any> {
-  [key: string]: T | null;
-}
-export interface SelectProps {
+
+export interface DropdownProps {
   haveSearch?: boolean;
   haveIcon?: boolean;
   label?: string;
@@ -15,11 +14,11 @@ export interface SelectProps {
   data?: DropdownData[];
   className?: string;
   disabled?: boolean;
-  form: UseFormReturn<FormDropdownData>;
+  form: any;
   name: string;
-  onChange?: (value?: DropdownData) => void;
+  onChange?: (value: string | null) => void;
 }
-const Dropdown = (props: SelectProps) => {
+const Dropdown = (props: DropdownProps) => {
   const {
     name,
     form,
@@ -40,7 +39,7 @@ const Dropdown = (props: SelectProps) => {
     setDropdownData(data);
   };
 
-  const handleClickItem = (value: DropdownData) => {
+  const handleClickItem = (value: string | null) => {
     setShowDropdown(false);
     onChange(value);
   };
@@ -62,7 +61,6 @@ const Dropdown = (props: SelectProps) => {
       document.removeEventListener('click', handleClickOutside);
     };
   }, []);
-
   return (
     <Controller
       name={name}
@@ -74,7 +72,9 @@ const Dropdown = (props: SelectProps) => {
               className="flex items-center justify-between p-2 border rounded-lg cursor-pointer border-slate-100 z-0"
               onClick={handleToggleDropdown}
             >
-              <span className="font-semibold z-0 select-none">{value?.text || label}</span>
+              <span className="font-semibold z-0 select-none">
+                {data?.find((item) => item.value == value)?.text || label}
+              </span>
               {haveIcon && (
                 <span>
                   {showDropdown ? (
@@ -103,15 +103,15 @@ const Dropdown = (props: SelectProps) => {
             </div>
             {showDropdown && (
               <div
-                className="z-10 absolute left-0 right-0 bg-white border rounded-lg 
+                className="z-50 absolute left-0 right-0 bg-white border rounded-lg 
               dropdown-list top-full border-slate-100 select-none"
               >
                 <div className="max-h-60 overflow-y-scroll">
                   {dataDropdown?.map((item, index) => (
                     <span
                       onClick={() => {
-                        onChange(item);
-                        handleClickItem(item);
+                        onChange(item.value);
+                        handleClickItem(item.value);
                       }}
                       key={index}
                       className="block p-2  cursor-pointer hover:bg-slate-100"

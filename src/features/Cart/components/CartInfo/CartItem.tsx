@@ -31,6 +31,7 @@ export default function CartItem({ item }: CartItemProps) {
   const handleRemove = () => {
     dispatch(cartActions.removeFromCart(item.product._id));
   };
+
   const handleChangeQuantity = (value: number) => {
     dispatch(cartActions.setQuantity({ productId: item.product._id, quantity: value }));
   };

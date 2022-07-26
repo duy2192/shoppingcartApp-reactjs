@@ -19,9 +19,9 @@ export default function Header() {
     navigate('/auth/login');
   };
   return (
-    <div className="h-14 flex items-center justify-around shadow-md fixed top-0 right-0 left-0 z-50 bg-slate-100">
+    <div className="h-14 flex items-center justify-around shadow-md fixed top-0 right-0 left-0 z-20 bg-slate-100">
       <div className="logo cursor-pointer" onClick={() => navigate('/product')}>
-        <span className="select-none font-bold">LoGO</span>
+        <span className="select-none font-bold ml-10">LoGO</span>
       </div>
       <div className="flex gap-8 items-center">
         <div
@@ -68,15 +68,15 @@ export default function Header() {
         {location.pathname.split('/')[1] !== 'auth' && (
           <div>
             {user ? (
-              <>
+              <div className="">
                 <UserMenu />
-              </>
+              </div>
             ) : (
               <button
                 className="w-auto p-2  rounded-md  bg-black text-slate-50 mx-auto font-semibold"
                 onClick={handleLogin}
               >
-                Login
+                Đăng nhập
               </button>
             )}
           </div>

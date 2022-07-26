@@ -19,6 +19,10 @@ export default function ProductPage() {
   const [filters, setFilters] = React.useState<IProductFilters>({
     _limit: 6,
     _page: 1,
+    _search: null,
+    _sort: null,
+    _order: null,
+    category: null,
   });
 
   // const queryParams = useMemo<IProductFilters>(() => {

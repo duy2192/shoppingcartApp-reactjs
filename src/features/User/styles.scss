@@ -1,0 +1,11 @@
+.sidebar {
+    animation: sidebarFadeIn ease 0.5s;
+}
+@keyframes sidebarFadeIn {
+    from {
+        width: 100px;
+    }
+    to {
+        width: 200px;
+    }
+}

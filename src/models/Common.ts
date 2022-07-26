@@ -1,4 +1,4 @@
-import { DropdownData } from "components/FormControl/Dropdown";
+import { DropdownData } from 'components/FormControl/Dropdown';
 
 export interface PaginationParams {
   _limit: number;
@@ -6,18 +6,19 @@ export interface PaginationParams {
   _total: number;
 }
 
-export interface ApiResponse<T=any> {
+export interface ApiResponse<T = any> {
   message: string;
   results: T;
   pagination: PaginationParams;
 }
 
-export interface Province extends DropdownData {
-  districts:Province[];
-  wards:Province[]
+export interface Province {
+  city: DropdownData[];
+  district: DropdownData[];
+  ward: DropdownData[];
 }
 export interface ProvinceParams {
-  city?:number;
-  district?:number;
-  ward?:number;
+  city?: number;
+  district?: number;
+  ward?: number;
 }

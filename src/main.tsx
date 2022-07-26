@@ -7,6 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
 import App from './App';
 import './index.css';
+import { RouterWrapper } from 'components/Router';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
@@ -14,7 +15,9 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       <PersistGate persistor={persistor}>
         <BrowserRouter>
           <SnackbarProvider anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
-            <App />
+            <RouterWrapper>
+              <App />
+            </RouterWrapper>
           </SnackbarProvider>
         </BrowserRouter>
       </PersistGate>

@@ -23,7 +23,12 @@ export default function ProductCart({ product, loading }: IProductCardProps) {
     <div className="flex font-sans rounded-md overflow-hidden h-60 shadow-md w-full bg-white">
       <div className="flex-none w-1/2 relative cursor-pointer">
         {!loading ? (
-          <img src={thumbnails[0]} alt="" className="absolute inset-0 w-60 h-auto p-4" loading="lazy" />
+          <img
+            src={thumbnails[0]}
+            alt=""
+            className="absolute inset-0 w-60 h-auto p-4 select-none"
+            loading="lazy"
+          />
         ) : (
           <div
             role="status"
@@ -53,7 +58,7 @@ export default function ProductCart({ product, loading }: IProductCardProps) {
           <div className="flex flex-wrap">
             <h1 className="flex-auto text-lg font-semibold text-slate-900 line-clamp-2 ">{name}</h1>
             <div className="text-lg font-semibold text-slate-700">{formatPrice(price)}</div>
-            <div className="w-full flex-none text-sm font-medium text-slate-700 mt-2">In stock</div>
+            <div className="w-full flex-none text-sm font-medium text-slate-700 mt-2">Còn hàng</div>
           </div>
 
           <div className="flex flex-wrap gap-3 mb-6 text-sm font-medium">
@@ -62,7 +67,7 @@ export default function ProductCart({ product, loading }: IProductCardProps) {
               type="button"
               onClick={handleAddToCart}
             >
-              Add to cart
+              Thêm vào giỏ
             </button>
 
             <button

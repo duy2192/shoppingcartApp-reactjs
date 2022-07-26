@@ -1,11 +1,10 @@
 import { unwrapResult } from '@reduxjs/toolkit';
-import { useAppDispatch, useAppSelector } from 'app/hooks';
-import { login, LoginPayload, register, RegisterPayload } from 'features/Auth/services/authSlice';
+import { useAppDispatch } from 'app/hooks';
+import { register, RegisterPayload } from 'features/Auth/services/authSlice';
 import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import LoginForm from '../LoginForm';
-import RegisterForm from '../RegisterForm';
+import RegisterForm from './RegisterForm';
 
 const Register = () => {
   const dispatch = useAppDispatch();
@@ -20,7 +19,7 @@ const Register = () => {
     repeatPassword: '',
   };
 
-  const handleSubmitLogin = async (formValues: RegisterPayload) => {
+  const handleSubmitRegister = async (formValues: RegisterPayload) => {
     try {
       setLoading(true);
       const resultAction = await dispatch(register(formValues));
@@ -35,7 +34,7 @@ const Register = () => {
       setLoading(false);
     }
   };
-  return <RegisterForm initialValues={initialValues} onSubmit={handleSubmitLogin} loading={loading} />;
+  return <RegisterForm initialValues={initialValues} onSubmit={handleSubmitRegister} loading={loading} />;
 };
 
 export default Register;

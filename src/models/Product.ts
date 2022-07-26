@@ -9,8 +9,8 @@ export interface Product {
 export interface IProductFilters {
   _limit?: number;
   _page?: number;
-  _search?: string;
-  _sort?: string;
-  _order?: string;
-  category?: string;
+  _search: string | null;
+  _sort: string | null;
+  _order: string | null;
+  category: string | null;
 }

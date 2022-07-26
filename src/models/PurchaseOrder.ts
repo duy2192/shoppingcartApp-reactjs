@@ -8,8 +8,8 @@ export interface PurchaseOrder {
   address: string;
   phone: string;
   cart: ICartItemSubmit[];
-  city: string;
-  district: string;
-  ward: string;
+  city: number | null;
+  district: number | null;
+  ward: number | null;
   note: string;
 }
