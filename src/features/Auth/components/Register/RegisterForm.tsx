@@ -30,7 +30,7 @@ export default function RegisterForm({ initialValues, onSubmit, loading = false 
   return (
     <>
       <div className="p-10">
-        <h1 className="text-center font-bold text-2xl">Đăng nhập</h1>
+        <h1 className="text-center font-bold text-2xl">Đăng ký</h1>
       </div>
       <div className="flex items-center justify-center flex-col">
         <form onSubmit={form.handleSubmit(handleSubmit)}>
@@ -98,7 +98,7 @@ export default function RegisterForm({ initialValues, onSubmit, loading = false 
                 </svg>
               </div>
             ) : (
-              'Đăng nhập'
+              'Đăng ký'
             )}
           </button>
           <div className="flex justify-between">

@@ -70,7 +70,7 @@ export default function OrderBillSubmit({ onSubmit }: IOrderBillSubmitProps) {
 
   return (
     <div className="">
-      <div className="p-10 min-h-screen">
+      <div className="p-10 ">
         <span className="font-bold text-2xl mb-10 block">Thông tin vận chuyển</span>
 
         <form onSubmit={form.handleSubmit(handleSubmit)} className="">

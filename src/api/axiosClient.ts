@@ -1,4 +1,4 @@
-import axios, { AxiosResponse, HeadersDefaults } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { SERVER_HOST } from 'constants/index';
 
 const axiosClient = axios.create({
@@ -35,7 +35,7 @@ axiosClient.interceptors.response.use(
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
     const { config, status, data } = error.response;
-    const URLs = ['/auth/login', '/auth/register'];
+    const URLs = ['/auth/login', '/auth/register', '/user/changePassword'];
 
     if (URLs.includes(config.url) && status === 500) {
       const error = data.message || {};

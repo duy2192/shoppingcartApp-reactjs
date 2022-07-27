@@ -4,8 +4,9 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import AccountPage from './pages/AccountPage';
 import ProfilePage from './pages/ProfilePage';
-import OrderPage from './pages/OrderPage';
+import { OrderHistoryPage } from './pages/OrderHistoryPage';
 import './styles.scss';
+import { OrderDetailPage } from './pages/OrderDetailPage';
 
 function UserFeature() {
   const [open, setOpen] = React.useState(window.innerWidth > 1024);
@@ -66,7 +67,8 @@ function UserFeature() {
           <Routes>
             <Route path="/" element={<ProfilePage />}></Route>
             <Route path="/account" element={<AccountPage />}></Route>
-            <Route path="/order" element={<OrderPage />}></Route>
+            <Route path="/order" element={<OrderHistoryPage />}></Route>
+            <Route path="/order/:orderId" element={<OrderDetailPage />}></Route>
             <Route path="*" element={<Navigate to="/notfound" />}></Route>
           </Routes>
         </div>

@@ -1,11 +1,14 @@
 import React from 'react';
+import { Account } from '../components/Account';
 
 function AccountPage() {
   return (
-    <div>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores voluptatum officia vel aspernatur,
-      totam repellendus omnis tenetur tempora iusto aliquam dolorem ea in voluptates minima quis numquam
-      nostrum, quisquam qui!
+    <div className="container ">
+      <h1 className="border-b-2 text-2xl font-normal pb-2">Thông tin tài khoản</h1>
+
+      <div className="mt-8">
+        <Account />
+      </div>
     </div>
   );
 }

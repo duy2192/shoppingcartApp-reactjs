@@ -6,6 +6,7 @@ export interface InputFieldProps {
   name: string;
   form: any;
   disabled?: boolean;
+  readOnly?: boolean;
   className?: string;
   placeholder?: string;
   type?: string;
@@ -23,6 +24,7 @@ function InputField(props: InputFieldProps) {
     type = 'text',
     size = 'md',
     id,
+    readOnly,
   } = props;
 
   return (
@@ -45,13 +47,14 @@ function InputField(props: InputFieldProps) {
                 'w-full p-2 shadow-sm  rounded-md border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800',
                 'outline-blue-400',
                 error && 'outline-red-400',
-                disabled && 'bg-slate-300',
+                disabled && 'bg-slate-200 select-none pointer-events-none',
                 size === 'sm' && 'p-2',
                 size === 'md' && 'p-3',
                 size === 'lg' && 'p-4'
               )}
               placeholder={placeholder}
               disabled={disabled}
+              readOnly={readOnly}
               value={value}
               onChange={onChange}
             />
