@@ -2,67 +2,32 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useAppSelector } from 'app/hooks';
 import InputField from 'components/FormControl/InputField';
 import ProvincesForm from 'components/FormControl/ProvincesForm';
-import { PHONE_REGEX } from 'constants/index';
 import { selectCurrentUser } from 'features/Auth/services/authSlice';
-import { PurchaseOrder } from 'models/PurchaseOrder';
+import { PurchaseOrderSubmit } from 'models/PurchaseOrder';
 import { useForm } from 'react-hook-form';
-import * as yup from 'yup';
+import { orderSubmitSchema } from 'schema';
 export interface IOrderBillSubmitProps {
-  onSubmit: (data: PurchaseOrder) => Promise<void>;
+  onSubmit: (data: PurchaseOrderSubmit) => Promise<void>;
 }
 export default function OrderBillSubmit({ onSubmit }: IOrderBillSubmitProps) {
   const currenUser = useAppSelector(selectCurrentUser);
 
-  const schema = yup.object().shape({
-    name: yup.string().required('Họ tên không được để trống!').typeError('Họ tên không được để trống!'),
-    phone: yup
-      .string()
-      .matches(PHONE_REGEX, 'Số điện thoại không hợp lệ!')
-      .min(10, 'Số điện thoại không hợp lệ!')
-      .required('Số điện thoại không được để trống!')
-      .typeError('Số điện thoại không được để trống!'),
-    address: yup.string().required('Địa chỉ không được để trống!').typeError('Địa chỉ không được để trống!'),
-    email: yup
-      .string()
-      .email('Email không hợp lệ!')
-      .required('Email không được để trống!')
-      .typeError('Email không được để trống!'),
-    city: yup.number().typeError('Thành phố không được để trống!').required('Thành phố không được để trống!'),
-    district: yup
-      .number()
-      .typeError('Quận/Huyện không được để trống!')
-      .required('Quận/Huyện không được để trống!'),
-    ward: yup.number().typeError('Phường/Xã không được để trống!').required('Phường/Xã không được để trống!'),
-    note: yup.string(),
-  });
-
-  const form = useForm({
+  const form = useForm<PurchaseOrderSubmit>({
     defaultValues: {
       name: currenUser?.name || '',
       phone: currenUser?.phone || '',
       address: currenUser?.address || '',
       email: currenUser?.email || '',
-      city: currenUser?.city || null,
-      district: currenUser?.district || null,
-      ward: currenUser?.ward || null,
+      city: currenUser?.city,
+      district: currenUser?.district,
+      ward: currenUser?.ward,
       note: '',
     },
-    resolver: yupResolver(schema),
-    reValidateMode: 'onChange',
+    resolver: yupResolver(orderSubmitSchema),
   });
-  const handleSubmit = async (data: any) => {
+  const handleSubmit = async (data: PurchaseOrderSubmit) => {
     try {
       await onSubmit(data);
-      form.reset({
-        name: '',
-        phone: '',
-        address: '',
-        email: '',
-        city: null,
-        district: null,
-        ward: null,
-        note: '',
-      });
     } catch (error) {
       console.log(error);
     }

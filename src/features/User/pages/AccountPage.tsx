@@ -3,7 +3,7 @@ import { Account } from '../components/Account';
 
 function AccountPage() {
   return (
-    <div className="container ">
+    <div className=" ">
       <h1 className="border-b-2 text-2xl font-normal pb-2">Thông tin tài khoản</h1>
 
       <div className="mt-8">

@@ -1,32 +1,28 @@
-import { commonApi } from 'api';
 import { ProvinceParams } from 'models';
 import React, { useEffect } from 'react';
+import { getProvinceList } from 'utils';
 import Dropdown, { DropdownData } from '../Dropdown';
 export interface ProvincesFormProps {
   form: any;
   className?: string;
 }
 function ProvincesForm({ form, className }: ProvincesFormProps) {
-  const [cityList, setCityList] = React.useState<DropdownData[]>([]);
-  const [districtList, setDistrictList] = React.useState<DropdownData[]>([]);
-  const [wardList, setWardList] = React.useState<DropdownData[]>([]);
+  const [cityList, setCityList] = React.useState<DropdownData<number>[]>([]);
+  const [districtList, setDistrictList] = React.useState<DropdownData<number>[]>([]);
+  const [wardList, setWardList] = React.useState<DropdownData<number>[]>([]);
   const [provincesParams, setProvincesParams] = React.useState<ProvinceParams>({
     city: form.getValues('city'),
     district: form.getValues('district'),
   });
 
   useEffect(() => {
-    (async () => {
-      try {
-        const { results } = await commonApi.getProvinces(provincesParams);
-        setCityList(results.city);
-        setDistrictList(results.district);
-        setWardList(results.ward);
-      } catch (error) {}
-    })();
+    const results = getProvinceList(provincesParams);
+    setCityList(results.city);
+    setDistrictList(results.district);
+    setWardList(results.ward);
   }, [provincesParams]);
 
-  const handleChangeProvince = (name: keyof ProvinceParams, value: string | null) => {
+  const handleChangeProvince = (name: keyof ProvinceParams, value: number| null) => {
     if (name === 'city') {
       form.setValue('district', null);
       form.setValue('ward', null);

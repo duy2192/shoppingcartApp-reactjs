@@ -1,15 +1,15 @@
+import { yupResolver } from '@hookform/resolvers/yup';
+import { uploadApi } from 'api';
 import { useAppSelector } from 'app/hooks';
-import { selectCurrentUser } from 'features/Auth/services/authSlice';
 import avatarBlank from 'assets/img/avatar.png';
 import InputField from 'components/FormControl/InputField';
-import { useForm } from 'react-hook-form';
-import { useRef, useState } from 'react';
-import { uploadApi } from 'api';
-import { MIME_IMAGE, PHONE_REGEX } from 'constants/index';
-import { User } from 'models';
 import ProvincesForm from 'components/FormControl/ProvincesForm';
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { MIME_IMAGE } from 'constants/index';
+import { selectCurrentUser } from 'features/Auth/services/authSlice';
+import { User } from 'models';
+import { useRef, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { userProfileSchema } from 'schema'
 
 export interface ProfileFormProps {
   onSubmit: (data: User) => void;
@@ -20,23 +20,7 @@ function ProfileForm({ onSubmit }: ProfileFormProps) {
   const [loadingUpload, setLoadingUpload] = useState(false);
   const fileUploadRef = useRef<HTMLInputElement>(null);
 
-  const schema = yup.object().shape({
-    name: yup.string().required('Họ tên không được để trống!'),
-    email: yup.string().email('Email không hợp lệ!').required('Email không được để trống!'),
-    phone: yup
-      .string()
-      .matches(PHONE_REGEX, 'Số điện thoại không hợp lệ!')
-      .min(10, 'Số điện thoại không hợp lệ!')
-      .required('Số điện thoại không được để trống!'),
-    address: yup.string().required('Địa chỉ không được để trống!'),
-    city: yup.number().typeError('Thành phố không được để trống!').required('Thành phố không được để trống!'),
-    district: yup
-      .number()
-      .typeError('Quận/Huyện không được để trống!')
-      .required('Quận/Huyện không được để trống!'),
-    ward: yup.number().typeError('Phường/Xã không được để trống!').required('Phường/Xã không được để trống!'),
-    avatar: yup.string(),
-  });
+  
 
   const form = useForm<User>({
     defaultValues: {
@@ -49,8 +33,7 @@ function ProfileForm({ onSubmit }: ProfileFormProps) {
       ward: currentUser?.ward,
       avatar: currentUser?.avatar,
     },
-    reValidateMode: 'onChange',
-    resolver: yupResolver(schema),
+    resolver: yupResolver(userProfileSchema),
   });
   const handleSubmit = async (data: User) => {
     try {
@@ -150,7 +133,7 @@ function ProfileForm({ onSubmit }: ProfileFormProps) {
           <div className="flex justify-center my-4 max-w-md">
             <button
               type="submit"
-              className="bg-slate-500  p-2 rounded-md shadow-md text-slate-50 text-center"
+              className="bg-slate-500  p-2 rounded-md shadow-md text-slate-50 text-center select-none"
             >
               Cập nhật
             </button>

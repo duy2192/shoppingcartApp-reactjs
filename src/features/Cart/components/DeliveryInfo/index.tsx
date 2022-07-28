@@ -5,9 +5,9 @@ import {
   ICartItem,
   selectCartItems,
   submitPurchaseOrderGuest,
-  submitPurchaseOrderUser,
+  submitPurchaseOrderUser
 } from 'features/Cart/services/cartSlice';
-import { PurchaseOrder } from 'models/PurchaseOrder';
+import { PurchaseOrderSubmit } from 'models/PurchaseOrder';
 import { useSnackbar } from 'notistack';
 import OrderBillSubmit from './OrderBillSubmit';
 
@@ -16,11 +16,11 @@ export default function DeliveryInfo() {
   const currentCart = useAppSelector(selectCartItems);
   const currentUser = useAppSelector(selectCurrentUser);
   const dispatch = useAppDispatch();
-  const handleSubmit = async (data: PurchaseOrder) => {
+  const handleSubmit = async (data: PurchaseOrderSubmit) => {
     try {
-      const orderBill: PurchaseOrder = {
+      const orderBill: PurchaseOrderSubmit = {
         ...data,
-        cart: currentCart.map((item: ICartItem) => ({ ...item, product: item.product._id })),
+        orderDetail: currentCart.map((item: ICartItem) => ({ ...item, product: item.product._id })),
       };
       if (!currentUser) {
         const resultAction = await dispatch(submitPurchaseOrderGuest(orderBill));

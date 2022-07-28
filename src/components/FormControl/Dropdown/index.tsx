@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Controller } from 'react-hook-form';
 
-export interface DropdownData<T = string> {
+export interface DropdownData<T = number> {
   text: string;
   value: T | null;
 }
@@ -11,12 +11,13 @@ export interface DropdownProps {
   haveIcon?: boolean;
   label?: string;
   placeholder?: string;
-  data?: DropdownData[];
+  type?:string;
+  data?: DropdownData<any>[];
   className?: string;
   disabled?: boolean;
   form: any;
   name: string;
-  onChange?: (value: string | null) => void;
+  onChange?: (value:  any) => void;
 }
 const Dropdown = (props: DropdownProps) => {
   const {
@@ -39,7 +40,7 @@ const Dropdown = (props: DropdownProps) => {
     setDropdownData(data);
   };
 
-  const handleClickItem = (value: string | null) => {
+  const handleClickItem = (value: any) => {
     setShowDropdown(false);
     onChange(value);
   };
@@ -103,10 +104,10 @@ const Dropdown = (props: DropdownProps) => {
             </div>
             {showDropdown && (
               <div
-                className="z-50 absolute left-0 right-0 bg-white border rounded-lg 
+                className="z-30 absolute left-0 right-0 bg-white border rounded-lg 
               dropdown-list top-full border-slate-100 select-none"
               >
-                <div className="max-h-60 overflow-y-scroll">
+                <div className="max-h-60 overflow-y-auto">
                   {dataDropdown?.map((item, index) => (
                     <span
                       onClick={() => {

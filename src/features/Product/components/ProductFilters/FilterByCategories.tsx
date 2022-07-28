@@ -7,7 +7,7 @@ export interface IFilterByCategoriesProps {
   onChange: () => void;
 }
 export default function FilterByCategories({ form, name, onChange }: IFilterByCategoriesProps) {
-  const [categoryList, setCategoryList] = React.useState<DropdownData[]>([
+  const [categoryList, setCategoryList] = React.useState<DropdownData<string>[]>([
     {
       text: '----',
       value: null,

@@ -26,6 +26,7 @@ export default function CartItem({ item }: CartItemProps) {
     resolver: yupResolver(schema),
     reValidateMode: 'onChange',
     mode: 'onChange',
+    
   });
 
   const handleRemove = () => {
@@ -57,7 +58,7 @@ export default function CartItem({ item }: CartItemProps) {
 
           <div>
             <span className="text-black font-semibold">
-              {formatPrice(item.product.price * item.quantity)}
+              {formatPrice((item.product.salePrice||item.product.price) * item.quantity)}
             </span>
           </div>
         </div>

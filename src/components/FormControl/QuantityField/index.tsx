@@ -31,6 +31,14 @@ export default function QuantityField({
       onChange(value);
     }
   };
+  const handleChangeQuantity = (value: number) => {
+    if (max && value > max) return;
+    if (min && value < min) return;
+
+    if (!disabled) {
+      onChange(value);
+    }
+  };
   const { control } = form;
   return (
     <Controller
@@ -65,7 +73,10 @@ export default function QuantityField({
             </div>
             <div>
               <input
-                onChange={(e) => onChange(Number(e.target.value))}
+                onChange={(e) => {
+                  onChange(Number(e.target.value))
+                  handleChangeQuantity(Number(e.target.value))
+                }}
                 type="number"
                 className="p-1 w-8 text-center"
                 value={value}

@@ -1,11 +1,22 @@
-.sidebar {
+.sidebar-fadeIn {
     animation: sidebarFadeIn ease 0.5s;
+}
+.sidebar-fadeOut {
+    animation: sidebarFadeout ease 0.5s;
 }
 @keyframes sidebarFadeIn {
     from {
         width: 100px;
     }
     to {
-        width: 200px;
+        width: 192px;
+    }
+}
+@keyframes sidebarFadeout {
+    from {
+        width: 192px;
+    }
+    to {
+        width: 0;
     }
 }

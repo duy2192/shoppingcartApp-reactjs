@@ -1,10 +1,9 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useAppSelector } from 'app/hooks';
 import InputField from 'components/FormControl/InputField';
-import ProvincesForm from 'components/FormControl/ProvincesForm';
 import { selectCurrentUser } from 'features/Auth/services/authSlice';
 import { useForm } from 'react-hook-form';
-import * as yup from 'yup';
+import { changePasswordSchema } from 'schema';
 
 export interface AccountFormProps {
   onSubmit: (data: IChangePassword) => void;
@@ -18,15 +17,6 @@ export interface IChangePassword {
 export function AccountForm({ onSubmit }: AccountFormProps) {
   const currentUser = useAppSelector(selectCurrentUser);
 
-  const schema = yup.object().shape({
-    oldPassword: yup.string().required('Mật khẩu không hợp lệ!'),
-    newPassword: yup.string().required('Mật khẩu không hợp lệ!'),
-    repeatPassword: yup
-      .string()
-      .required()
-      .oneOf([yup.ref('newPassword')], 'Mật khẩu xác nhận chưa đúng!'),
-  });
-
   const form = useForm<IChangePassword>({
     defaultValues: {
       oldPassword: '',
@@ -34,7 +24,7 @@ export function AccountForm({ onSubmit }: AccountFormProps) {
       repeatPassword: '',
     },
     reValidateMode: 'onChange',
-    resolver: yupResolver(schema),
+    resolver: yupResolver(changePasswordSchema),
   });
   const handleSubmit = async (data: IChangePassword) => {
     try {
@@ -83,7 +73,7 @@ export function AccountForm({ onSubmit }: AccountFormProps) {
           <div className="flex justify-center my-4 max-w-md">
             <button
               type="submit"
-              className="bg-slate-500  p-2 rounded-md shadow-md text-slate-50 text-center"
+              className="bg-slate-500  p-2 rounded-md shadow-md text-slate-50 text-center select-none"
             >
               Đổi mật khẩu
             </button>

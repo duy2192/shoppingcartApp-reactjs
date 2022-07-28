@@ -1,2 +1,2 @@
-export * from "./GlobalLoading"
+export * from "./SpinnerLoading"
 export * from "./RouterLoading"

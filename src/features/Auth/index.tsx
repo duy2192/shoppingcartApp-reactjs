@@ -4,7 +4,6 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import { selectToken } from './services/authSlice';
 
-export interface IAuthProps {}
 export default function AuthFeature() {
   const token = useAppSelector(selectToken);
   if (token) return <Navigate replace to="/" />;

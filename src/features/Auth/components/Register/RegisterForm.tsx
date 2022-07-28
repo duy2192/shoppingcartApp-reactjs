@@ -3,7 +3,7 @@ import InputField from 'components/FormControl/InputField';
 import { RegisterPayload } from 'features/Auth/services/authSlice';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import * as yup from 'yup';
+import { registerSchema } from 'schema';
 
 export interface IRegisterFormProps {
   initialValues: RegisterPayload;
@@ -12,17 +12,10 @@ export interface IRegisterFormProps {
 }
 
 export default function RegisterForm({ initialValues, onSubmit, loading = false }: IRegisterFormProps) {
-  const schema = yup.object().shape({
-    email: yup.string().email('Email không hợp lệ!').required('Email không được để trống!'),
-    username: yup.string().required('Tên tài khoản không được để trống!'),
-    name: yup.string().required('Tên không được để trống!'),
-    password: yup.string().required('Mật khẩu không được để trống!'),
-    repeatPassword: yup.string().oneOf([yup.ref('password'), null], 'Mật khẩu không khớp!'),
-  });
+
   const form = useForm({
     defaultValues: initialValues,
-    resolver: yupResolver(schema),
-    reValidateMode: 'onChange',
+    resolver: yupResolver(registerSchema),
   });
   const handleSubmit = (value: RegisterPayload) => {
     onSubmit?.(value);

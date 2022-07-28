@@ -1,15 +1,25 @@
+import classNames from "classnames";
+
 export interface IGlobalLoadingProps {
   loading?: boolean;
+  className?: string;
+  size?: "md"|"sm"|"lg";
 }
 
-export function GlobalLoading({ loading = true }: IGlobalLoadingProps) {
+export const SpinnerLoading=({ loading = true,className,size="md" }: IGlobalLoadingProps) =>{
   return (
     <>
       {loading && (
-        <div role="status" className="flex justify-center items-center h-screen">
+        <div role="status" className={className}>
           <svg
             aria-hidden="true"
-            className="mr-2 w-36 h-36 text-gray-200 animate-spin dark:text-gray-600 fill-black"
+            className={
+              classNames("mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-black ",
+              size==="sm"&&"w-12 h-12",
+              size==="md"&&"w-20 h-20",
+              size==="lg"&&"w-32 h-32"
+              )
+            }
             viewBox="0 0 100 101"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"

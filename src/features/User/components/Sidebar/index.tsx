@@ -1,4 +1,4 @@
-import React from 'react';
+import classNames from 'classnames';
 import { NavLink } from 'react-router-dom';
 import './style.scss';
 interface SidebarProps {
@@ -6,7 +6,7 @@ interface SidebarProps {
 }
 function Sidebar({ open = true }: SidebarProps) {
   return (
-    <div className="select-none inline-flex flex-col">
+    <div className={classNames("select-none inline-flex flex-col transition-all ",!open&&"hidden")}>
       <NavLink
         className=" inline-flex gap-2 hover:no-underline p-2 mt-3 hover:bg-slate-400 hover:text-slate-50 rounded-md overflow-hidden"
         to="/user/"

@@ -17,7 +17,7 @@ export default function CartSubmit() {
       </div>
       <div className="flex justify-between mt-3 border-b-2">
         <p className='font-semibold'>Phí giao hàng</p>
-        <p className='font-semibold text-slate-500'>{formatPrice(30000)}</p>
+        <p className='font-semibold text-slate-500'>{formatPrice(0)}</p>
       </div>
       <div className="flex justify-between mt-3">
         <p className='font-bold'>Tổng tiền</p>

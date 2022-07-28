@@ -57,13 +57,13 @@ function UserFeature() {
         </svg>
       </button>
       <div className="min-h-screen">
-        <div className="fixed bg-white h-screen shadow-md z-20 top-0 lg:z-10 lg:max-w-[calc(100%_/_5)]">
-          <div className={classNames(!open ? 'hidden' : 'sidebar mt-20')}>
+        <div className="fixed bg-white h-screen shadow-md z-20 top-0 lg:z-10 lg:max-w-[calc(100%_/_5)] ">
+          <div className={classNames(!open ? 'sidebar-fadeOut  w-0' : 'sidebar-fadeIn mt-20 w-48')}>
             <Sidebar open={open} />
           </div>
         </div>
 
-        <div className="lg:ml-[calc(100%_/_5)] mt-20 ml-8">
+        <div className="lg:ml-[calc(100%_/_5)] mt-20 mx-8">
           <Routes>
             <Route path="/" element={<ProfilePage />}></Route>
             <Route path="/account" element={<AccountPage />}></Route>

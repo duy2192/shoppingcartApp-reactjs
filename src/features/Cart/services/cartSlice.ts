@@ -2,7 +2,7 @@ import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit'
 import { purchaseOrderApi, userApi } from 'api';
 import { RootState } from 'app/store';
 import { Product } from 'models';
-import { PurchaseOrder } from 'models/PurchaseOrder';
+import { PurchaseOrderSubmit } from 'models/PurchaseOrder';
 import { mergeCart } from 'utils';
 
 export interface ICartItem {
@@ -24,17 +24,20 @@ const initialState: CartState = {
 
 export const submitPurchaseOrderGuest = createAsyncThunk(
   'cart/submitGuest',
-  async (payload: PurchaseOrder) => {
+  async (payload: PurchaseOrderSubmit) => {
     const { results } = await purchaseOrderApi.createPurchaseOrder(payload);
 
     return results;
   }
 );
-export const submitPurchaseOrderUser = createAsyncThunk('cart/submitUser', async (payload: PurchaseOrder) => {
-  const { results } = await userApi.createPurchaseOrder(payload);
+export const submitPurchaseOrderUser = createAsyncThunk(
+  'cart/submitUser',
+  async (payload: PurchaseOrderSubmit) => {
+    const { results } = await userApi.createPurchaseOrder(payload);
 
-  return results;
-});
+    return results;
+  }
+);
 
 const cartSlice = createSlice({
   name: 'cart',
@@ -106,7 +109,7 @@ export const selectCartItemsCount = createSelector(selectCartItems, (cartItems) 
 );
 
 export const selectCartTotal = createSelector(selectCartItems, (cartItems) =>
-  cartItems.reduce((total: number, item: ICartItem) => total + item.product.price * item.quantity, 0)
+  cartItems.reduce((total: number, item: ICartItem) => total + (item.product.salePrice||item.product.price) * item.quantity, 0)
 );
 
 export const selectCartNotification = (state: RootState) => state.cart.cartNotification;

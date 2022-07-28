@@ -39,3 +39,27 @@ input[type=number]::-webkit-outer-spin-button {
 	box-shadow: inset 0 0 6px rgba(0,0,0,.3);
 	background-color: #c8d6e5;
 }
+
+
+.customTable table {
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+}
+
+.customTable thead {
+  flex: 0 0 auto;
+}
+
+.customTable tbody {
+  flex: 1 1 auto;
+  display: block;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+
+.customTable tr {
+  width: 100%;
+  display: table;
+  table-layout: fixed;
+}

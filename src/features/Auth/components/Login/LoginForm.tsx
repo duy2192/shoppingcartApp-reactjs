@@ -3,7 +3,7 @@ import InputField from 'components/FormControl/InputField';
 import { LoginPayload } from 'features/Auth/services/authSlice';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import * as yup from 'yup';
+import { loginSchema } from 'schema';
 
 export interface ILoginFormProps {
   initialValues: LoginPayload;
@@ -12,14 +12,10 @@ export interface ILoginFormProps {
 }
 
 export default function LoginForm({ initialValues, onSubmit, loading = false }: ILoginFormProps) {
-  const schema = yup.object().shape({
-    identifier: yup.string().required('Vui lòng nhập Email hoặc Tên tài khoản!'),
-    password: yup.string().required('Vui lòng nhập mật khẩu!'),
-  });
+
   const form = useForm({
     defaultValues: initialValues,
-    resolver: yupResolver(schema),
-    reValidateMode: 'onChange',
+    resolver: yupResolver(loginSchema),
   });
   const handleSubmit = (value: LoginPayload) => {
     onSubmit?.(value);
