@@ -3,7 +3,7 @@ import { useAppDispatch } from 'app/hooks';
 import QuantityField from 'components/FormControl/QuantityField';
 import { cartActions, ICartItem } from 'features/Cart/services/cartSlice';
 import { useForm } from 'react-hook-form';
-import { formatPrice } from 'utils';
+import { getPrice } from 'utils';
 import * as yup from 'yup';
 
 export interface CartItemProps {
@@ -26,7 +26,6 @@ export default function CartItem({ item }: CartItemProps) {
     resolver: yupResolver(schema),
     reValidateMode: 'onChange',
     mode: 'onChange',
-    
   });
 
   const handleRemove = () => {
@@ -52,14 +51,12 @@ export default function CartItem({ item }: CartItemProps) {
         <div className="flex justify-between w-full items-center">
           <div>
             <form onSubmit={form.handleSubmit(handleSubmit)}>
-              <QuantityField min={1} form={form} name="quantity" onChange={handleChangeQuantity} />
+              <QuantityField min={1} max={99} form={form} name="quantity" onChange={handleChangeQuantity} />
             </form>
           </div>
 
           <div>
-            <span className="text-black font-semibold">
-              {formatPrice((item.product.salePrice||item.product.price) * item.quantity)}
-            </span>
+            <span className="text-black font-semibold">{getPrice(item.product, item.quantity)}</span>
           </div>
         </div>
       </div>

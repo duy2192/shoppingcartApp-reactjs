@@ -1,7 +1,7 @@
 import { useAppDispatch } from 'app/hooks';
 import { cartActions } from 'features/Cart/services/cartSlice';
 import { Product } from 'models';
-import { formatPrice } from 'utils';
+import { formatPrice, getPrice, getSalePercent } from 'utils';
 export interface IProductCardProps {
   product: Product;
   loading?: boolean;
@@ -24,7 +24,7 @@ export default function ProductCart({ product, loading }: IProductCardProps) {
       {salePrice && (
         <div className="absolute top-0 right-0 bg-red-400 px-1">
           <span className="font-medium text-sm text-slate-50">
-            Giảm giá {((1 - salePrice / price) * 100).toFixed(0)}%
+            Giảm giá {getSalePercent(salePrice, price)}%
           </span>
         </div>
       )}
@@ -69,7 +69,7 @@ export default function ProductCart({ product, loading }: IProductCardProps) {
               {salePrice && (
                 <span className=" line-through text-md text-slate-500">{formatPrice(price)}</span>
               )}
-              <span>{formatPrice(salePrice || price)}</span>
+              <span>{getPrice(product)}</span>
             </div>
             <div className="w-full flex-none text-sm font-medium text-slate-700 mt-2">Còn hàng</div>
           </div>
