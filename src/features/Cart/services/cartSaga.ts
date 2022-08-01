@@ -1,7 +1,7 @@
 import { userApi } from 'api';
 import { selectCurrentUser } from 'features/Auth/services/authSlice';
 import { ApiResponse, User } from 'models';
-import { call, select, takeLatest } from 'redux-saga/effects';
+import { call, debounce, select, takeLatest } from 'redux-saga/effects';
 import { cartActions, ICartItem, selectCartItems } from './cartSlice';
 
 function* handleUpdateCart() {
@@ -19,7 +19,8 @@ function* handleUpdateCart() {
 }
 
 export function* cartSaga() {
-  yield takeLatest(
+  yield debounce(
+    500,
     [cartActions.addToCart, cartActions.removeFromCart, cartActions.mergeCart, cartActions.setQuantity],
     handleUpdateCart
   );

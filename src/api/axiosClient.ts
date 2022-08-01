@@ -11,7 +11,7 @@ const axiosClient = axios.create({
 axiosClient.interceptors.request.use(async (config) => {
   const customHeaders: any = {};
 
-  const accessToken = localStorage.getItem('token');
+  const accessToken = localStorage.getItem('token') || '';
   if (accessToken) {
     customHeaders.Authorization = accessToken;
   }
@@ -31,9 +31,10 @@ axiosClient.interceptors.response.use(
     // Do something with response data
     return response.data;
   },
-  function (error) {
+  function (error: any) {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
+    if (!error.response) return Promise.reject(error);
     const { config, status, data } = error.response;
     const URLs = ['/auth/login', '/auth/register', '/user/changePassword'];
 
