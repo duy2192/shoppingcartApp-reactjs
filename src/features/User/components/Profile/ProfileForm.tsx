@@ -20,7 +20,6 @@ function ProfileForm({ onSubmit }: ProfileFormProps) {
   const [loadingUpload, setLoadingUpload] = useState(false);
   const fileUploadRef = useRef<HTMLInputElement>(null);
 
-  
 
   const form = useForm<User>({
     defaultValues: {
@@ -56,7 +55,12 @@ function ProfileForm({ onSubmit }: ProfileFormProps) {
       setLoadingUpload(false);
     }
   };
+  const getImage = () => {
+    if(fileUploadRef.current?.files&&fileUploadRef.current?.files[0])
+      return window?.URL?.createObjectURL(fileUploadRef?.current?.files[0])
 
+    return avatarBlank;
+  }
   return (
     <div className="container ">
       <form onSubmit={form.handleSubmit(handleSubmit)}>
@@ -65,9 +69,7 @@ function ProfileForm({ onSubmit }: ProfileFormProps) {
           <img
             loading="lazy"
             src={
-              form.getValues('avatar') ||
-              (fileUploadRef.current?.files && URL.createObjectURL(fileUploadRef?.current?.files[0])) ||
-              avatarBlank
+              form.getValues('avatar') ||getImage()
             }
             alt=""
             className="w-40 h-40 p-1 rounded-full shadow-sm object-center"

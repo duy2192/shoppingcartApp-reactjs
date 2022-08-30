@@ -30,7 +30,7 @@ export default defineConfig({
     environment: 'jsdom',
   },
   server: {
-    port: 3000,
+    port: 3001,
   },
   preview: {
     port: 8088,
