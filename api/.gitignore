@@ -1,0 +1,10 @@
+.docker/data
+node_modules
+src/assets/upload/*
+build
+
+.env.development
+.env.production
+tmp
+
+yarn-error.log

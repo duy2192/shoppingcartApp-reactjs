@@ -9,7 +9,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Deploy
+      - name: Deploy web
         shell: bash
         run: |
           mkdir -p ~/.ssh/
@@ -18,6 +18,7 @@ jobs:
           echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
           ssh -t -t -i $SSH_KEY_PATH $SSH_USER@$SSH_SERVER_IP "cd ${PATH_TO_PROJECT};
           git pull;
+          cd web;
           rm -rf dist
           yarn install;
           yarn build;"
@@ -29,3 +30,26 @@ jobs:
           SSH_KEY_PATH: ${{ github.workspace }}/../private.key
           SSH_USER: ${{ secrets.SSH_USER }}
           PATH_TO_PROJECT: ${{ secrets.PATH_TO_PROJECT }}
+      
+      - name: Deploy api server
+        shell: bash
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_PRIVATE_KEY" > ../private.key
+          sudo chmod 600 ../private.key
+          echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          ssh -t -t -i $SSH_KEY_PATH $SSH_USER@$SSH_SERVER_IP "cd ${PATH_TO_PROJECT};
+          git pull;
+          cd api;
+          yarn install;
+          yarn build;
+          yarn deploy;"
+
+        env:
+          SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
+          SSH_SERVER_IP: ${{secrets.SSH_SERVER_IP}}
+          SSH_KNOWN_HOSTS: ${{secrets.SSH_KNOWN_HOSTS}}
+          SSH_KEY_PATH: ${{ github.workspace }}/../private.key
+          SSH_USER: ${{ secrets.SSH_USER }}
+          PATH_TO_PROJECT: ${{ secrets.PATH_TO_PROJECT }}
+
