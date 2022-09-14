@@ -1,4 +1,4 @@
-export const forgotPasswordTemplate = (data) => (`
+export const forgotPasswordTemplate = (data) => `
 <!DOCTYPE html>
 <html lang="vi">
   <head>
@@ -97,7 +97,7 @@ export const forgotPasswordTemplate = (data) => (`
                                   text-align: left;
                                 "
                               >
-                                <p style="margin: 0 0 16px">Xin chào  data.name,</p>
+                                <p style="margin: 0 0 16px">Xin chào  ${data.name},</p>
 
                                 <p style="margin: 0 0 16px">
                                   Mã xác minh bạn cần dùng để lấy lại mật khẩu tài khoản của mình (
@@ -171,4 +171,4 @@ export const forgotPasswordTemplate = (data) => (`
     </div>
   </body>
 </html>
-`)
+`;

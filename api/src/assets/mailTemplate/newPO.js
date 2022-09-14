@@ -1,7 +1,7 @@
-import {convertDatetime, formatPrice, getPrice} from "utils"
-import {commonService} from "services"
+import { convertDatetime, formatPrice, getPrice } from 'utils';
+import { commonService } from 'services';
 
-export const newPO=(purchaseOrder,cart)=>(`
+export const newPO = (purchaseOrder, cart) => `
 <!DOCTYPE html>
 <html lang="vi">
   <head>
@@ -100,7 +100,7 @@ export const newPO=(purchaseOrder,cart)=>(`
                                   text-align: left;
                                 "
                               >
-                                <p style="margin: 0 0 16px">Xin chào  purchaseOrder.name,</p>
+                                <p style="margin: 0 0 16px">Xin chào  ${purchaseOrder.name},</p>
 
                                 <p style="margin: 0 0 16px">
                                   Đây là thông tin đơn hàng mà bạn đã mua ở
@@ -185,8 +185,9 @@ export const newPO=(purchaseOrder,cart)=>(`
                                       </tr>
                                     </thead>
                                     <tbody>
-                                      ${ cart.map(item=>(
-                                      `
+                                      ${cart.map(
+                                        (item) =>
+                                          `
                                       <tr class="order_item">
                                         <td
                                           class="td"
@@ -251,7 +252,7 @@ export const newPO=(purchaseOrder,cart)=>(`
                                         </td>
                                       </tr>
                                       `
-                                      ))}
+                                      )}
                                     </tbody>
                                     <tfoot>
                                       <tr>
@@ -413,10 +414,13 @@ export const newPO=(purchaseOrder,cart)=>(`
                                         class="address"
                                         style="padding: 12px; color: #636363; border: 1px solid #e5e5e5"
                                       >
-                                         ${purchaseOrder.name}<br />${commonService.getLabelProvinces("city",
-                                        purchaseOrder.city)}<br />${commonService.getLabelProvinces("district",
-                                        purchaseOrder.district)}<br />${commonService.getLabelProvinces("ward",
-                                        purchaseOrder.ward)}<br /> ${purchaseOrder.address} <br />
+                                         ${purchaseOrder.name}<br />${commonService.getLabelProvinces(
+  'city',
+  purchaseOrder.city
+)}<br />${commonService.getLabelProvinces(
+  'district',
+  purchaseOrder.district
+)}<br />${commonService.getLabelProvinces('ward', purchaseOrder.ward)}<br /> ${purchaseOrder.address} <br />
                                         <a href="tel:" + "purchaseOrder.phone"
                                           style="color: #353b48; font-weight: normal; text-decoration:
                                           underline;"> ${purchaseOrder.phone}</a
@@ -476,4 +480,4 @@ export const newPO=(purchaseOrder,cart)=>(`
     </div>
   </body>
 </html>
-`)
+`;
